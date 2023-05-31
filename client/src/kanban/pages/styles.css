@@ -1,0 +1,49 @@
+img{
+  width: 5rem;
+}
+h2{
+  text-align: center;
+}
+.card{
+  margin: auto;
+  padding: 10px;
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+.container {
+display: grid; 
+grid-template-columns: 1fr 1fr 1fr; 
+grid-template-rows: 1fr 1fr 1fr; 
+gap:20px; 
+grid-template-areas: 
+  "to-do doing done"
+  "to-do doing done"
+  "to-do doing done"; 
+}
+.to-do { 
+  text-align: center;
+  grid-area: to-do;
+  background-color: #4c007d;
+  box-shadow: 0px 10px 15px -3px rgba(0,0,0,0.5);
+  border-radius: 10px;
+}
+.doing {
+  text-align: center;
+  grid-area: doing;
+  background-color: #7f00b2;
+  box-shadow: 0px 10px 15px -3px rgba(0,0,0,0.5);
+  border-radius: 10px;
+}
+.done { 
+  text-align: center;
+  grid-area: done; 
+  background-color: #bc4ed8;
+  box-shadow: 0px 10px 15px -3px rgba(0,0,0,0.5);
+  border-radius: 10px;
+}
+.formulario{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}

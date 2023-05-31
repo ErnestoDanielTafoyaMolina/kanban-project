@@ -1,13 +1,13 @@
 import { NavLink } from "react-router-dom"
-
-
+import LogoutIcon from '@mui/icons-material/Logout';
 export const NavBar = () => {
   return (
     <>
-        <nav className="navbar bg-body-tertiary">
+        <nav className="navbar">
             <div className="container-fluid">
-                <NavLink className="navbar-brand" href="#">
-                  Kanban
+                <h2>Kanban</h2>
+                <NavLink className="navbar-brand" to="/login">
+                  <LogoutIcon />
                 </NavLink>
             </div>
         </nav>
