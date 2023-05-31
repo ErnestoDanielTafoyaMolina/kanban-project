@@ -1,2 +1,2 @@
-export * from "./CreateTask";
-export * from "./KanbanApp";
+export * from "./Dashboard";
+export * from "./Add";

@@ -1,6 +1,9 @@
-import { useReducer } from "react";
+import { AuthContext } from "./AuthContext"
 
-import { AuthContext } from "./";
-
-import { authReducer } from "./";
-
+export const AuthProvider = ({ children }) => {
+  return (
+    <AuthContext.Provider value={{}}>
+        { children }
+    </AuthContext.Provider>  
+  )
+}
