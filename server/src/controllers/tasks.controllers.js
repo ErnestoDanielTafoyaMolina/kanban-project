@@ -1,7 +1,10 @@
 import { getConnection, querys, sql } from "../db";
 
+// se utiliza para agregar una nueva tarea. Extrae el nombre de la tarea, la descripción y la URL de la imagen de la solicitud del cuerpo (req.body).
+// También obtiene el ID del usuario actualmente autenticado (req.user.id).
 export const addTask = async(req,res)=>{
-    const { idUser, taskName, taskDescription, taskUrlImage } = req.body;
+    const { taskName, taskDescription, taskUrlImage } = req.body;
+    const idUser = req.user.id;
     if(!idUser || !taskName || !taskDescription){
         res.status(400).json({
             msg:"Se requiere al menos el nombre de la tarea y su descripcion "
@@ -9,6 +12,7 @@ export const addTask = async(req,res)=>{
     }
     try {
         //@idUser, @taskName, @taskDescription, @taskUrlImage
+        // se intenta establecer una conexión a la base de datos
         const pool = await getConnection();
         const addedTask = await pool
         .request()
@@ -24,10 +28,11 @@ export const addTask = async(req,res)=>{
             addedTask:addedTask.recordset
         })
     } catch (error) {
-        console.log(error);
+        console.log(error.message);
         res.status(500).json({"message":error.message})
     }
 };
+//se utiliza para eliminar una tarea existente. 
 export const deleteTask = async(req,res)=>{
     const { idTask } = req.params;
     if(!idTask){
@@ -36,8 +41,9 @@ export const deleteTask = async(req,res)=>{
         });
     };
     try {
+        // // se intenta establecer una conexión a la base de datos
         const pool = await getConnection();
-
+// se ejecuta una consulta para eliminar la tarea
         const deletedTask = await pool
         .request()
         .input("idTask",sql.Int,idTask)
@@ -53,14 +59,17 @@ export const deleteTask = async(req,res)=>{
         res.status(500).json({"message":error.message})
     }
 };
+//se utiliza para editar una tarea existente
 export const editTask= async(req,res)=>{
     const idTask  = req.params.id;
+    const idUser = req.user.id;
     if(!idTask){
         return res.status(400).json({
             msg:"El id de la tarea es requerido"
         });
     };
-    const { idUser, taskName,taskDescription, taskUrlImage } = req.body;
+    // se extraen el nombre de la tarea, la descripción y la URL de la imagen del cuerpo de la solicitud
+    const { taskName,taskDescription, taskUrlImage } = req.body;
     if(!idUser || !taskName || !taskDescription){
         res.status(400).json({
             msg:"Se requiere al menos el nombre de la tarea y su descripcion "
@@ -68,6 +77,7 @@ export const editTask= async(req,res)=>{
     }
     try {
         const pool = await getConnection();
+        //se ejecuta una consulta para editar la tarea
         const editedTask = await pool
         .request()
         .input("idTask",sql.Int,idTask)
@@ -87,8 +97,11 @@ export const editTask= async(req,res)=>{
         res.status(500).json({"message":error.message})
     }
 };
+//se utiliza para obtener todas las tareas de un usuario específico
 export const getAllTasksByUserId = async(req,res)=>{
-    const userId = req.params.id;
+    //se extrae el ID del usuario actualmente autenticado
+    console.log(req.user.id)
+    const userId = req.user.id;
     if(!userId){
         return res.status(400).json({
             msg:"El id del usuario es requerido"
@@ -116,6 +129,7 @@ export const getAllTasksByUserId = async(req,res)=>{
         res.status(500).json({"message":error.message})
     }
 };
+//se utiliza para obtener una tarea específica por su ID extrae el ID de la tarea de los parámetros de la solicitud 
 export const getOneTaskById = async(req,res)=>{
     const idTask = req.params.id;
     if(!idTask){
@@ -128,6 +142,7 @@ export const getOneTaskById = async(req,res)=>{
         const task = await pool
         .request()
         .input("idTask",sql.Int,idTask)
+//se ejecuta la consulta 
         .query(querys.getOneTaskById)
 
         if (!task.recordset[0]){
@@ -139,6 +154,7 @@ export const getOneTaskById = async(req,res)=>{
             msg:"tarea encontrada!!",
             task:task.recordset
         });
+//En caso de producirse un error durante el proceso, se captura y se devuelve un estado 500 con un mensaje indicando 
     } catch (error) {
         console.log(error)
         return res.status(500).json({
