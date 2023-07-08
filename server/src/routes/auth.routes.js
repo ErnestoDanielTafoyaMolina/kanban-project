@@ -9,13 +9,13 @@ import { authRequire } from "../middlewares/validateToken";
 const router = Router();
 
 //Define una ruta POST "/login" que llama a la función controladora handleLogin cuando se accede a ella. Esta ruta se utiliza para iniciar sesión en la aplicación.
-router.post("/login",handleLogin);
+router.post("/auth/login",handleLogin);
 //Esta ruta se utiliza para registrar un nuevo usuario en la aplicación.
-router.post("/register",handleRegister);
+router.post("/auth/register",handleRegister);
 //Esta ruta se utiliza para cerrar sesión en la aplicación.
-router.post("/logout",logout);
+router.post("/auth/logout",logout);
 //Se utiliza para obtener el perfil del usuario autenticado.
-router.get("/profile",authRequire,profile);
+router.get("/auth/profile",authRequire,profile);
 
 //Exporta el enrutador para que pueda ser utilizado en otros archivos.
 export default router;
