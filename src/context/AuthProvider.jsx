@@ -11,7 +11,7 @@ export const useAuth = () => {
     }
     return context;
 }
-
+// para merge
 // eslint-disable-next-line react/prop-types
 export const AuthProvider = ({ children }) => {
 
